@@ -1,6 +1,6 @@
 const sfdcAuthenticatePath = Runtime.getFunctions()['auth/sfdc-authenticate'].path;
 const { sfdcAuthenticate } = require(sfdcAuthenticatePath);
-
+// test
 exports.handler = async function (context, event, callback) {
   let response = new Twilio.Response();
   response.appendHeader('Content-Type', 'application/json');
@@ -69,7 +69,12 @@ const getCustomerDetailsByCustomerIdCallback = async (contactId, connection) => 
           Name: 1,
           Title: 1,
           MobilePhone: 1,
+          Email: 1,
           'Account.Name': 1,
+          SMS_Opt_In__c: 1,
+          Next_Suggested_Donation__c: 1,
+          Last_Donation_Amount__c: 1,
+          Event_Attendance__c: 1,
         }
       )
       .limit(1)
@@ -103,9 +108,24 @@ const getCustomerDetailsByCustomerIdCallback = async (contactId, connection) => 
             value: sfdcRecord.Email
           }
         ],
+        links: [
+          {
+            type: "Salesforce Contact Record",
+            value: `salesforce1://sObject/${sfdcRecord.Id}/view`,
+            display_name: `${sfdcRecord.Name}`,
+          },
+        ],
         details: {
           title: "Information",
-          content: `${accountName} - ${sfdcRecord.Title}`
+          content: `${accountName} - ${sfdcRecord.Title}` +
+          "\n" +
+          `Event Attendance : ${sfdcRecord.Event_Attendance__c}` +
+          "\n" +
+          `SMS Opt In : ${sfdcRecord.SMS_Opt_In__c}` +
+          "\n" +
+          `Last Donation : ${sfdcRecord.Last_Donation_Amount__c}` +
+          "\n" +
+          `Next Suggested Donation : ${sfdcRecord.Next_Suggested_Donation__c}` 
         }
       }
     }
