@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const jsforce = require('jsforce');
 const axios = require('axios');
-var querystring = require('querystring');
+const querystring = require('querystring');
 
 exports.sfdcAuthenticate = async (context, worker) => {
     const salesforceUsername = worker ? worker : context.SF_USERNAME;

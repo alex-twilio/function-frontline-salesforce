@@ -14,7 +14,6 @@
     "twilio": "^3.67"
   },
   "devDependencies": {
-    "@twilio/runtime-handler": "^1.2.5",
     "twilio-run": "^3.2.0"
   },
   "engines": {
